@@ -1,7 +1,12 @@
 package com.tutorial.mongocrudback.CRUD.dto;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+
 public class ProductDto {
+    @NotBlank(message = "Product name is mandatory")
     private String name;
+    @Min(value = 1,message = "Product price is mandatory")
     private int price;
 
     public ProductDto() {

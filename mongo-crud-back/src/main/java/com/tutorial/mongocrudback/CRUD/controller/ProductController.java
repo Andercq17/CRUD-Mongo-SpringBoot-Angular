@@ -3,12 +3,15 @@ package com.tutorial.mongocrudback.CRUD.controller;
 import com.tutorial.mongocrudback.CRUD.dto.ProductDto;
 import com.tutorial.mongocrudback.CRUD.entity.Product;
 import com.tutorial.mongocrudback.CRUD.service.ProductService;
+import com.tutorial.mongocrudback.global.dto.MessageDto;
 import com.tutorial.mongocrudback.global.exceptions.AttributeException;
 import com.tutorial.mongocrudback.global.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -29,19 +32,25 @@ public class ProductController {
         return ResponseEntity.ok(productService.getOne(id));
     }
     @PostMapping
-    public ResponseEntity<Product> save(@RequestBody ProductDto dto) throws AttributeException {
-        return ResponseEntity.ok(productService.save(dto));
+    public ResponseEntity<MessageDto> save(@Valid @RequestBody ProductDto dto) throws AttributeException {
+        Product product=productService.save(dto);
+        String message="Product "+product.getName()+" Have been saved";
+        return ResponseEntity.ok(new MessageDto(HttpStatus.OK,message));
     }
 
     //mapping get with url/id -> localhost:8000/product/id
     @PutMapping("/{id}")
-    public ResponseEntity<Product> update(@PathVariable("id") int id, @RequestBody ProductDto dto) throws ResourceNotFoundException, AttributeException {
-        return ResponseEntity.ok(productService.update(id,dto));
+    public ResponseEntity<MessageDto> update(@PathVariable("id") int id, @Valid @RequestBody ProductDto dto) throws ResourceNotFoundException, AttributeException {
+        Product product=productService.update(id,dto);
+        String message="Product "+product.getName()+" Have been updated";
+        return ResponseEntity.ok(new MessageDto(HttpStatus.OK,message));
     }
 
     //mapping delete with url/id -> localhost:8000/product/id
     @DeleteMapping("/{id}")
-    public ResponseEntity<Product> delete(@PathVariable("id") int id) throws ResourceNotFoundException {
-        return ResponseEntity.ok(productService.delete(id));
+    public ResponseEntity<MessageDto> delete(@PathVariable("id") int id) throws ResourceNotFoundException {
+        Product product=productService.delete(id);
+        String message="Product "+product.getName()+" Have been deleted";
+        return ResponseEntity.ok(new MessageDto(HttpStatus.OK,message));
     }
 }
