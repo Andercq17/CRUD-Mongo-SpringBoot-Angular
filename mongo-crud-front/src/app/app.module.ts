@@ -29,7 +29,9 @@ import { ToastrModule } from 'ngx-toastr';
     BrowserModule,
     SweetAlert2Module.forRoot(),
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
