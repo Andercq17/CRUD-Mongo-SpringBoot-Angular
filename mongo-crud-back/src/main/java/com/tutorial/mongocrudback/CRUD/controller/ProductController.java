@@ -16,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/product") //this is the way how we can instance the mapping - >localhost:8000/product
+@CrossOrigin
 public class ProductController {
     @Autowired
     ProductService productService;
